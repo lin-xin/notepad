@@ -1,18 +1,304 @@
-# notepad
+# 基于vue+vuex+localStorage开发的本地记事本
 
-> A Vue.js project
+> 本文采用vue+vuex+localStorage+sass+webpack，实现一个本地的记事本。在线预览地址：[DEMO](http://test.omwteam.com/)
 
-## Build Setup
+## 功能说明
 
-``` bash
-# install dependencies
-npm install
+- 支持回车添加事件
+- 支持事件状态切换
+	- 添加事件 -> 进入未完成列表
+	- 未完成 -> 已完成(勾选checkbox)
+	- 未完成 -> 已取消(点击取消按钮)
+	- 已完成 -> 未完成(取消勾选checkbox)
+	- 已取消 -> 未完成(点击恢复按钮)
+- 支持控制台打印所有事件数据
+- 支持编辑事件
+- 支持删除事件
+- 支持清空所有事件
+- 支持本地化存储
+- 支持折叠面板
 
-# serve with hot reload at localhost:8080
-npm run dev
+## 项目笔记 ##
+本项目是使用vue-cli脚手架生成的项目，项目代码可以到我的github上clone下来。clone下来之后可进入文件目录
 
-# build for production with minification
-npm run build
-```
+	// 执行
+	npm install
+	// 安装依赖完成之后再执行
+	npm run dev
+	// 即可在本地开启 http://localhost:8080 访问该项目
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+github地址：[https://github.com/lin-xin/notepad](https://github.com/lin-xin/notepad)
+
+demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
+
+**一、目录结构**
+
+
+	|——notepad/
+	|	|——build/
+	|	|——confg/
+	|	|——node_modules/
+	|	|——src/
+	|	|	|——assets/
+	|	|	|——components/
+	|	|	|	|——add_event.vue       //添加事件组件
+	|	|	|	|——dialog.vue		   //弹出框组件
+	|	|	|	|——event_table.vue     //表格组件
+	|	|	|	|——header.vue		   //头部组件
+	|	|	|	|——tools.vue	       //工具栏组件
+	|	|	|——store/				   //存放vuex代码
+	|	|	|	|——actions.js		   //vuex的action文件
+	|	|	|	|——index.js			   //vuex核心代码
+	|	|	|——App.vue				   //父组件
+	|	|	|——main.js				   //入口文件
+	|	|——static/
+	|	|——.babelrc
+	|	|——.editorconfig
+	|	|——.gitgnore
+	|	|——index.html
+	|	|——package.json
+	|	|——README.md
+
+
+**二、主要难点**
+
+1.折叠面板
+
+	难点：点击折叠面板title,要动画实现sliderUp和sliderDown，但是div高度auto，使用transition： height .3s无效。
+	解决方法：点击时候获取div高度值，赋值给style.height，然后再改变高度为0，这样transition才会生效。
+	代码如下：
+		<template>
+			<div id="app">
+				<div class="event-tab" @click.self="changeCollapse(0,$event)">未完成
+	                <span :class="{'close-span': !collapse[0].show}"></span>
+	            </div>
+	            <ul class="event-box"
+	                :style="{'height':'auto','display':'block'}">
+	                <li class="event-list" v-for="value in getToDo">
+	                    <input type="checkbox" @click="moveToDone(value.id,$event)">
+	                    <div>{{value.content}}</div>
+	                    <button class="cancel-btn" @click="moveCancel(value.id)">取消</button>
+	                </li>
+	            </ul>
+			</div>
+		</template>
+		<script>
+		export default {
+	        data(){
+	            return {
+	                collapse:[
+	                    {
+	                        show: true,
+	                        contentHeight: 'auto'
+	                    }
+	                ]
+				}
+			},
+			methods:{
+				changeCollapse(num,event){
+	                if(this.collapse[num].show){
+	                    this.closeCollapse(num,event);
+	                    this.collapse[num].show = false;
+	                }else{
+	                    this.openCollapse(num,event);
+	                    this.collapse[num].show = true;
+	                }
+	            },
+	            closeCollapse(num,event){
+	                const ulElement = event.target.nextElementSibling;
+	                ulElement.style.height = ulElement.offsetHeight + 'px';
+	                this.collapse[num].contentHeight = ulElement.offsetHeight;
+	                setTimeout(function () {
+	                    ulElement.style.height = '0px';
+	                    setTimeout(function () {
+	                        ulElement.style.display = 'none';
+	                    },300)
+	                },10)
+	
+	            },
+	            openCollapse(num,event){
+	                const ulElement = event.target.nextElementSibling,
+	                        self = this;
+	                ulElement.style.display = 'block';
+	                setTimeout(function () {
+	                    ulElement.style.height = self.collapse[num].contentHeight + 'px';
+	                    setTimeout(function () {
+	                        ulElement.style.height = 'auto';
+	                    },300)
+	                },10)
+	            }
+			}
+		}
+	</script>
+	<style lang="scss" rel="stylesheet/scss">
+		ul.event-box{
+            list-style: none;
+            overflow: hidden;
+            border:{
+                left:1px solid #eee;
+                right:1px solid #eee;
+            }
+            transition: height .3s;
+		}
+	</style>
+
+2.切换状态
+
+	难点：在不同的状态间切换，实时地把事件在不同状态列表中显示出来
+	解决方法：利用vuex进行状态管理，把所有事件和状态存储在store对象中，在组件中通过计算属性获得事件，因此就有了实时性。
+	代码如下：
+	// store/index.js
+	import Vue from 'vue';
+	import Vuex from 'vuex';
+	import * as actions from './actions.js';
+	Vue.use(Vuex);
+	const state = {
+	    event: []  // event,用来存储所有事件
+	}
+	const mutations = {
+	    EVENTDONE(states,obj){  // EVENTDONE，用来修改事件的状态为已完成
+	        for (let i = 0; i < states.event.length; i++) {
+	            if (states.event[i].id === obj.id) {
+	                states.event[i].type = 2;   // type == 2,表示状态为已完成
+	                break;
+	            }
+	        }
+	    }
+	}
+	export default new Vuex.Store({
+	    state,
+	    actions,
+	    mutations
+	})
+
+	// store/actions.js
+	export const eventdone = ({ commit }, param) =>{
+	    commit('EVENTDONE',{id: param});
+	}
+
+	// App.vue
+	<template>
+		<div id="app">
+            <ul class="event-box">
+                <li class="event-list" v-for="value in getToDo">
+                    <input type="checkbox" @click="moveToDone(value.id,$event)">
+                    <div>{{value.content}}</div>
+                </li>
+            </ul>
+		</div>
+	</template>
+	<script>
+		export default {
+			computed:{
+				getToDo(){    // getToDo，实时获取状态为未完成的事件
+	                return this.$store.state.event.filter(function(d){
+	                    if(d.type === 1){   // type == 1，表示状态为未完成
+	                        return d;
+	                    }
+	                });
+	            }
+			},
+			methods:{
+				moveToDone(id,event){  // moveToDone，选中checkbox将事件移至已完成
+	                this.$store.dispatch('eventdone',id);
+	            }
+			}
+		}
+	</script>
+
+3.本地存储
+
+	知识点：localStorage是HTML5提供的一种在客户端存储数据的新方法，没有时间限制，第二天、第二周或下一年之后，数据依然可用。
+	用法：
+		1）存储数据：localStorage.setItem(item, value)
+		2）获取数据：localStorage.getItem(item)
+		3）移除数据：localStorage.removeItem(item)
+	代码如下：
+	// store/index.js
+	const LocalEvent = function(item){     		// 定义一个本地存储的构造函数
+	    this.get = function () {				// 存数据
+	        return JSON.parse(localStorage.getItem(item)) || [];
+	    }
+	    this.set = function (obj) {				// 拿数据
+	        localStorage.setItem(item,JSON.stringify(obj));
+	    }
+	    this.clear = function () {				// 删数据
+	        localStorage.removeItem(item);
+	    }
+	}
+	const local = new LocalEvent('lx_notepad'); // 创建一个本地存储的事例
+	const state = {
+	    event: local.get()
+	}
+	const mutations = {
+	    ADDEVENT(states,obj){					// ADDEVENT，添加新的事件，并存储到localStorage里
+	        states.event.unshift(obj.items);
+	        local.set(states.event);
+	    }
+	}
+
+4.父子组件间的通讯
+	
+	知识点：组件实例的作用域是孤立的。这意味着不能并且不应该在子组件的模板内直接引用父组件的数据。
+		1）父组件可以使用 props 把数据传给子组件。
+		2）子组件可以使用 $emit 触发父组件的自定义事件。
+	代码如下：
+	// App.vue
+	<template>
+	    <div id="app">
+			// 通过 isShow、msg 把数据传个子组件，监听自定义事件cancel、sure。
+			<n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
+		</div>
+	</template>
+	<script>
+		import nDialog from './components/dialog.vue';
+		export default {
+			data(){
+            	return {
+                	dialog: true,
+                	tips: '清除后无法恢复，确认清除吗？'
+				}
+            },
+			components: {
+	            nDialog
+	        },
+			methods:{
+				sureDialog(){
+                	this.$store.dispatch('clearevent');
+                	this.dialog = false;
+            	}
+			}
+		}
+	</script>
+
+	// dialog.vue
+	<template>
+	    <div class="dialog" :class="{'dialog-show':isShow}">
+	        <div class="dialog-wrapper">
+	            <div class="dialog-content">
+	                {{msg}}
+	            </div>
+	            <div class="dialog-btns">
+	                <button type="button" class="cancel-btn" @click="cancelEvent">取消</button>
+	                <button type="button" class="sure-btn" @click="sureEvent">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</template>
+	<script>
+	    export default {
+	        props:['isShow','msg'],  // 通过 props 属性获得父组件传递过来的数据
+	        methods: {
+	            cancelEvent(){
+	                this.$emit('cancel');  // 取消按钮触发父组件的 cancel 自定义事件
+	            },
+	            sureEvent(){
+	                this.$emit('sure');    // 确认按钮触发父组件的 sure 自定义事件
+	            }
+	        }
+	    }
+	</script>
+
+## 总结 ##
+
+虽然只是做了个小小的记事本，但是我感觉收获还是很大的，很多知识点掌握得更加的牢固。这个记事本只做了一个页面，就没有用vue-router，路由也是vue里很强大的功能。

@@ -5,7 +5,6 @@ import App from './App';
 import Vuex from 'vuex';
 import store from './store/index';
 Vue.use(Vuex);
-/* eslint-disable no-new */
 new Vue({
     el: '#app',
     store: store,

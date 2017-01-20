@@ -73,8 +73,11 @@
                 }
             },
             editData(){
-                this.$store.dispatch('editevent',this.info);
-                this.is_edit = false;
+                this.info.content = this.info.content.trim();
+                if(this.info.content){
+                    this.$store.dispatch('editevent',this.info);
+                    this.is_edit = false;
+                }
             },
             closeTable(){
                 this.$emit('close');

@@ -22,6 +22,7 @@
                         content: '',
                         time: ''
                     };
+                self.content = self.content.trim();
                 if(self.content){
                     params.content = self.content;
                     self.$store.dispatch('addevent',params);
