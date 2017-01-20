@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <n-header :is-show="tools" @tools="tools =! tools"></n-header>
-        <section class="container">
+        <n-header @tools="changePages"></n-header>
+        <section class="container" :class="{'hide': table}">
             <add-event></add-event>
             <div class="event-content">
                 <div class="event-tab" @click.self="changeCollapse(0,$event)">未完成
@@ -36,7 +36,7 @@
                 </ul>
             </div>
             <n-tools :is-show="tools" @cleardialog="clearData" @opentable="table = true;tools = false"></n-tools>
-        </section>
+        </section >
         <n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
         <n-table @deldialog="delData" :is-show="table" @close="table = false"></n-table>
     </div>
@@ -185,6 +185,13 @@
                         break;
                 }
                 this.dialog = false;
+            },
+            changePages(){
+                if(this.table){
+                    this.table = !this.table;
+                }else{
+                    this.tools = !this.tools
+                }
             }
         }
     }
@@ -213,14 +220,20 @@
     }
     html{
         width:100%;
-        overflow: hidden;
+        overflow-x: hidden;
     }
     ul{
         list-style: none;
     }
     .container{
-        width:800px;
+        width:100%;
+        padding: 0 10px;
+        max-width:800px;
         margin:auto;
+        box-sizing: border-box;
+        &.hide{
+            display: none;
+        }
     }
     .event-content{
         .event-tab{

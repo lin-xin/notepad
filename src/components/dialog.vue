@@ -55,7 +55,8 @@
             position: absolute;
             left: 50%;
             top: 15%;
-            width: 400px;
+            width:100%;
+            max-width: 400px;
             transform: translateX(-50%);
             background: #fff;
             border-radius: 2px;

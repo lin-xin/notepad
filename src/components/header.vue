@@ -1,11 +1,10 @@
 <template>
     <header class="">
-        <h1>记事本 <a class="t-btn" :class="{'t-btn-left':isShow}" @click="showTools"><span></span></a></h1>
+        <h1>记事本 <a class="t-btn" @click="showTools"><span></span></a></h1>
     </header>
 </template>
 <script>
     export default {
-        props:['isShow'],
         methods: {
             showTools(){
                 this.$emit('tools');
@@ -21,7 +20,8 @@
         background: #00a2ff;
         h1{
             position: relative;
-            width:800px;
+            width:100%;
+            max-width:800px;
             margin:0 auto;
             line-height: 70px;
             text-align: center;
@@ -33,32 +33,6 @@
                 width:30px;
                 height:26px;
                 cursor: pointer;
-                &:hover span{
-                    &:before{
-                        width: 20px;
-                        left: 10px;
-                        transform: rotate(37deg) translateY(-7px);
-                    }
-                    &:after{
-                        width: 20px;
-                        left: 10px;
-                        transform: rotate(-37deg) translateY(7px);
-                    }
-                }
-                &.t-btn-left{
-                    &:hover span{
-                        &:before{
-                            width: 30px;
-                            left: 0px;
-                            transform: translateY(-7px);
-                        }
-                        &:after{
-                            width: 30px;
-                            left: 0px;
-                            transform: translateY(7px);
-                        }
-                    }
-                }
             }
             span,span:before,span:after{
                 position: absolute;

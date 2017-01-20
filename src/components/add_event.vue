@@ -36,10 +36,10 @@
 <style lang="scss" rel="stylesheet/scss">
     .event-add{
         position: relative;
-        padding:30px 0;
+        padding:30px 90px 30px 0;
         font-size: 16px;
         .n-input{
-            width:710px;
+            width:100%;
             height:40px;
             padding:7px 10px;
             line-height: 26px;
