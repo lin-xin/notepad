@@ -1,6 +1,6 @@
 # 基于vue+vuex+localStorage开发的本地记事本
 
-> 本文采用vue+vuex+localStorage+sass+webpack，实现一个本地的记事本。在线预览地址：[DEMO](http://test.omwteam.com/)
+> 本文采用vue+vuex+localStorage+sass+webpack，实现一个本地存储的记事本。在线预览地址：[DEMO](http://test.omwteam.com/)
 
 ## 功能说明
 
@@ -69,15 +69,10 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	代码如下：
 		<template>
 			<div id="app">
-				<div class="event-tab" @click.self="changeCollapse(0,$event)">未完成
-	                <span :class="{'close-span': !collapse[0].show}"></span>
-	            </div>
-	            <ul class="event-box"
-	                :style="{'height':'auto','display':'block'}">
+				<div class="event-tab" @click.self="changeCollapse(0,$event)">未完成</div>
+	            <ul class="event-box" :style="{'height':'auto','display':'block'}">
 	                <li class="event-list" v-for="value in getToDo">
-	                    <input type="checkbox" @click="moveToDone(value.id,$event)">
 	                    <div>{{value.content}}</div>
-	                    <button class="cancel-btn" @click="moveCancel(value.id)">取消</button>
 	                </li>
 	            </ul>
 			</div>
@@ -88,14 +83,14 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	            return {
 	                collapse:[
 	                    {
-	                        show: true,
-	                        contentHeight: 'auto'
+	                        show: true,  					// show == true, 表示当前折叠面板显示
+	                        contentHeight: 'auto'			// contentHeight, 存储当前折叠面板高度
 	                    }
 	                ]
 				}
 			},
 			methods:{
-				changeCollapse(num,event){
+				changeCollapse(num,event){    				// 根据折叠面板当前状态进行显示或折叠
 	                if(this.collapse[num].show){
 	                    this.closeCollapse(num,event);
 	                    this.collapse[num].show = false;
@@ -104,7 +99,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	                    this.collapse[num].show = true;
 	                }
 	            },
-	            closeCollapse(num,event){
+	            closeCollapse(num,event){					// closeCollapse，关闭折叠面板
 	                const ulElement = event.target.nextElementSibling;
 	                ulElement.style.height = ulElement.offsetHeight + 'px';
 	                this.collapse[num].contentHeight = ulElement.offsetHeight;
@@ -116,7 +111,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	                },10)
 	
 	            },
-	            openCollapse(num,event){
+	            openCollapse(num,event){					// openCollapse，显示折叠面板
 	                const ulElement = event.target.nextElementSibling,
 	                        self = this;
 	                ulElement.style.display = 'block';
@@ -138,7 +133,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
                 left:1px solid #eee;
                 right:1px solid #eee;
             }
-            transition: height .3s;
+            transition: height .3s;							// transition，添加折叠或显示时的动画效果
 		}
 	</style>
 
