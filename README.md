@@ -1,6 +1,6 @@
 # 基于vue+vuex+localStorage开发的本地记事本
 
-> 本文采用vue+vuex+localStorage+sass+webpack，实现一个本地存储的记事本。在线预览地址：[DEMO](http://test.omwteam.com/)
+> 本文采用vue+vuex+localStorage+sass+webpack，实现一个本地存储的记事本。兼容PC端和移动端。在线预览地址：[DEMO](http://test.omwteam.com/)
 
 ## 功能说明
 
@@ -297,3 +297,4 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 ## 总结 ##
 
 虽然只是做了个小小的记事本，但是我感觉收获还是很大的，很多知识点掌握得更加的牢固。这个记事本只做了一个页面，就没有用vue-router，路由也是vue里很强大的功能。
+做这个记事本的初衷，是因为在工作中，我都会把最近要做的事情给记在本子上，完成之后就会打钩，所以想把这个给放到电脑上去实现。接下来我还会继续扩展功能，比如搜索。
