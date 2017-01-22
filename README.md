@@ -1,6 +1,6 @@
 # 基于vue+vuex+localStorage开发的本地记事本
 
-> 本文采用vue+vuex+localStorage+sass+webpack，实现一个本地存储的记事本。在线预览地址：[DEMO](http://test.omwteam.com/)
+> 本文采用vue+vuex+localStorage+sass+webpack，实现一个本地存储的记事本。兼容PC端和移动端。在线预览地址：[DEMO](http://test.omwteam.com/)
 
 ## 功能说明
 
