@@ -2,7 +2,7 @@
     <section class="event-all" :class="{'event-all-show':isShow}">
         <div class="table-box">
             <div class="edit-input" :class="{'edit-input-show': is_edit}">
-                <input type="text" v-model="info.content" v-focus @keyup.enter="editData">
+                <input type="text" v-model="info.content" ref="content" @keyup.enter="editData">
                 <button @click="editData">确定</button>
             </div>
             <table class="event-table">
@@ -46,13 +46,6 @@
                 return this.$store.state.event;
             }
         },
-        directives: {
-            focus: {
-                update(el){
-                    el.focus();
-                }
-            }
-        },
         methods:{
             getType(type){
                 let str = '';
@@ -79,6 +72,7 @@
                     content : this.notapad[index].content,
                     id : this.notapad[index].id
                 }
+                this.$refs.content.focus();
             },
             editData(){
                 this.info.content = this.info.content.trim();
@@ -101,7 +95,7 @@
         top:70px;
         right:0;
         bottom:0;
-        transform: translateX(100%);
+        transform: translateX(-100%);
         transition: transform .5s;
         overflow-Y: scroll;
         background: #fff;

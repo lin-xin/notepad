@@ -218,7 +218,7 @@
         }
         cursor: pointer;
     }
-    html{
+    body,#app{
         width:100%;
         overflow-x: hidden;
     }
