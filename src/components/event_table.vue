@@ -2,7 +2,7 @@
     <section class="event-all" :class="{'event-all-show':isShow}">
         <div class="table-box">
             <div class="edit-input" :class="{'edit-input-show': is_edit}">
-                <input type="text" v-model="info.content" @keyup.enter="editData">
+                <input type="text" v-model="info.content" v-focus @keyup.enter="editData">
                 <button @click="editData">确定</button>
             </div>
             <table class="event-table">
@@ -25,7 +25,6 @@
                 </tbody>
             </table>
         </div>
-        <!--<div class="close-span" @click="closeTable">+</div>-->
     </section>
 </template>
 
@@ -45,6 +44,13 @@
         computed:{
             notapad(){
                 return this.$store.state.event;
+            }
+        },
+        directives: {
+            focus: {
+                update(el){
+                    el.focus();
+                }
             }
         },
         methods:{
