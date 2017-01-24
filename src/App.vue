@@ -206,6 +206,10 @@
         font-size: 16px;
         font-family: "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
     }
+    input,select,button{
+        -webkit-tap-highlight-color: transparent;
+
+    }
     button{
         padding:7px 0;
         outline: none;
