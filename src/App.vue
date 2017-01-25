@@ -206,9 +206,11 @@
         font-size: 16px;
         font-family: "Helvetica Neue", Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
     }
-    input,select,button{
+    input,button{
         -webkit-tap-highlight-color: transparent;
-
+    }
+    input[type=text]{
+        -webkit-appearance: none;
     }
     button{
         padding:7px 0;
