@@ -12,6 +12,7 @@
 	- 已完成 -> 未完成(取消勾选checkbox)
 	- 已取消 -> 未完成(点击恢复按钮)
 - 支持控制台打印所有事件数据
+- 支持筛选事件
 - 支持编辑事件
 - 支持删除事件
 - 支持清空所有事件
@@ -64,20 +65,23 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 1.折叠面板
 
-	难点：点击折叠面板title,要动画实现sliderUp和sliderDown，但是div高度auto，使用transition： height .3s无效。
-	解决方法：点击时候获取div高度值，赋值给style.height，然后再改变高度为0，这样transition才会生效。
-	代码如下：
-		<template>
-			<div id="app">
-				<div class="event-tab" @click.self="changeCollapse(0,$event)">未完成</div>
-	            <ul class="event-box" :style="{'height':'auto','display':'block'}">
-	                <li class="event-list" v-for="value in getToDo">
-	                    <div>{{value.content}}</div>
-	                </li>
-	            </ul>
-			</div>
-		</template>
-		<script>
+难点：点击折叠面板title,要动画实现sliderUp和sliderDown，但是div高度auto，使用transition： height .3s无效。
+
+解决方法：点击时候获取div高度值，赋值给style.height，然后再改变高度为0，这样transition才会生效。
+
+代码如下：
+
+	<template>
+		<div id="app">
+			<div class="event-tab" @click.self="changeCollapse(0,$event)">未完成</div>
+            <ul class="event-box" :style="{'height':'auto','display':'block'}">
+                <li class="event-list" v-for="value in getToDo">
+                    <div>{{value.content}}</div>
+                </li>
+            </ul>
+		</div>
+	</template>
+	<script>
 		export default {
 	        data(){
 	            return {
@@ -139,9 +143,12 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 2.切换状态
 
-	难点：在不同的状态间切换，实时地把事件在不同状态列表中显示出来
-	解决方法：利用vuex进行状态管理，把所有事件和状态存储在store对象中，在组件中通过计算属性获得事件，因此就有了实时性。
-	代码如下：
+难点：在不同的状态间切换，实时地把事件在不同状态列表中显示出来
+
+解决方法：利用vuex进行状态管理，把所有事件和状态存储在store对象中，在组件中通过计算属性获得事件，因此就有了实时性。
+
+代码如下：
+
 	// store/index.js
 	import Vue from 'vue';
 	import Vuex from 'vuex';
@@ -203,12 +210,16 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 3.本地存储
 
-	知识点：localStorage是HTML5提供的一种在客户端存储数据的新方法，没有时间限制，第二天、第二周或下一年之后，数据依然可用。
-	用法：
-		1）存储数据：localStorage.setItem(item, value)
-		2）获取数据：localStorage.getItem(item)
-		3）移除数据：localStorage.removeItem(item)
-	代码如下：
+知识点：localStorage是HTML5提供的一种在客户端存储数据的新方法，没有时间限制，第二天、第二周或下一年之后，数据依然可用。
+
+用法：
+
+	1）存储数据：localStorage.setItem(item, value)
+	2）获取数据：localStorage.getItem(item)
+	3）移除数据：localStorage.removeItem(item)
+
+代码如下：
+
 	// store/index.js
 	const LocalEvent = function(item){     		// 定义一个本地存储的构造函数
 	    this.get = function () {				// 存数据
@@ -234,10 +245,13 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 4.父子组件间的通讯
 	
-	知识点：组件实例的作用域是孤立的。这意味着不能并且不应该在子组件的模板内直接引用父组件的数据。
-		1）父组件可以使用 props 把数据传给子组件。
-		2）子组件可以使用 $emit 触发父组件的自定义事件。
-	代码如下：
+知识点：组件实例的作用域是孤立的。这意味着不能并且不应该在子组件的模板内直接引用父组件的数据。
+
+	1）父组件可以使用 props 把数据传给子组件。
+	2）子组件可以使用 $emit 触发父组件的自定义事件。
+
+代码如下：
+
 	// App.vue
 	<template>
 	    <div id="app">
@@ -294,7 +308,51 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	    }
 	</script>
 
+5.筛选功能
+
+功能描述：可根据 类型 和 关键词 进行筛选
+
+知识点：在返回所有事件的计算属性上，使用过滤器( filter )，进行对 type 和 content 的筛选，返回符合条件的事件。
+
+代码如下：
+
+	<script>
+	    export default {
+	        data: function(){
+	            return {
+	                screen_type: 0,														// 筛选类型，0 表示不筛选
+	                screen_title: '',													// 筛选关键词，'' 表示不筛选
+	            }
+	        },
+	        computed:{
+	            notapad(){
+	                var self = this;
+	                return self.$store.state.event.filter(function(d){					// 使用过滤器
+	                    if(self.screen_type !== 0 && self.screen_title === ''){			// 只筛选类型
+	                        if( d.type === self.screen_type ){
+	                            return d;
+	                        }
+	                    }else if(self.screen_type !== 0 && self.screen_title !== ''){	// 筛选类型和关键词
+	                        if( d.type === self.screen_type && d.content.indexOf(self.screen_title) !== -1){
+	                            return d;
+	                        }
+	                    }else if(self.screen_type === 0 && self.screen_title !== ''){	// 只筛选关键词
+	                        if(d.content.indexOf(self.screen_title) !== -1){
+	                            return d;
+	                        }
+	                    }else{															// 不进行筛选
+	                        return d;
+	                    }
+	                });
+	            }
+	        }
+		}	
+	</script>
+
+
 ## 总结 ##
 
 虽然只是做了个小小的记事本，但是我感觉收获还是很大的，很多知识点掌握得更加的牢固。这个记事本只做了一个页面，就没有用vue-router，路由也是vue里很强大的功能。
-做这个记事本的初衷，是因为在工作中，我都会把最近要做的事情给记在本子上，完成之后就会打钩，所以想把这个给放到电脑上去实现。接下来我还会继续扩展功能，比如搜索。
+做这个记事本的初衷，是因为在工作中，我都会把最近要做的事情给记在本子上，完成之后就会打钩，所以想把这个给放到电脑上去实现。
+
+01-25：添加筛选功能
