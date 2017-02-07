@@ -223,7 +223,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	// store/index.js
 	const LocalEvent = function(item){     		// 定义一个本地存储的构造函数
 	    this.get = function () {				// 存数据
-	        return JSON.parse(localStorage.getItem(item)) || [];
+	        return JSON.parse(localStorage.getItem(item));
 	    }
 	    this.set = function (obj) {				// 拿数据
 	        localStorage.setItem(item,JSON.stringify(obj));
@@ -233,13 +233,16 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	    }
 	}
 	const local = new LocalEvent('lx_notepad'); // 创建一个本地存储的事例
-	const state = {
-	    event: local.get()
+	const state = local.get() || {
+	    event: [],
+	    count: 0
 	}
 	const mutations = {
 	    ADDEVENT(states,obj){					// ADDEVENT，添加新的事件，并存储到localStorage里
+			states.count++;
+			obj.items.id = states.count;
 	        states.event.unshift(obj.items);
-	        local.set(states.event);
+	        local.set(states);
 	    }
 	}
 
@@ -356,3 +359,4 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 做这个记事本的初衷，是因为在工作中，我都会把最近要做的事情给记在本子上，完成之后就会打钩，所以想把这个给放到电脑上去实现。
 
 01-25：添加筛选功能
+02-07：修复issues 取消事件的bug #1
