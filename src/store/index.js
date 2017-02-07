@@ -12,7 +12,7 @@ const getDate = () => { //获取当天日期
 }
 const localEvent = function(item){
     this.get = function () {
-        return JSON.parse(localStorage.getItem(item)) || [];
+        return JSON.parse(localStorage.getItem(item));
     }
     this.set = function (obj) {
         localStorage.setItem(item,JSON.stringify(obj));
@@ -22,16 +22,17 @@ const localEvent = function(item){
     }
 }
 const local = new localEvent('lx_notepad');
-const state = {
-    event: local.get()
+const state = local.get() || {
+    event: [],
+    count: 0
 }
 
 const mutations = {
     ADDEVENT(states,obj){
-        let len = states.event.length + 1;
-        obj.items.id = len;
+        states.count++;
+        obj.items.id = states.count;
         states.event.unshift(obj.items);
-        local.set(states.event);
+        local.set(states);
     },
     EVENTDONE(states,obj){
         for (let i = 0; i < states.event.length; i++) {
@@ -44,7 +45,7 @@ const mutations = {
             }
         }
         states.event.unshift(item);
-        local.set(states.event);
+        local.set(states);
     },
     EVENTTODO(states,obj){
         for (let i = 0; i < states.event.length; i++) {
@@ -56,7 +57,7 @@ const mutations = {
             }
         }
         states.event.unshift(item);
-        local.set(states.event);
+        local.set(states);
     },
     EVENTCANCEL(states,obj){
         for (let i = 0; i < states.event.length; i++) {
@@ -68,7 +69,7 @@ const mutations = {
             }
         }
         states.event.unshift(item);
-        local.set(states.event);
+        local.set(states);
     },
     CLEAREVENT(states){
         states.event = [];
@@ -84,7 +85,7 @@ const mutations = {
                 }
             })
         }
-        local.set(states.event);
+        local.set(states);
     },
     EDITEVENT(states,info){
         if(states.event[info.index].id === info.id){
@@ -96,7 +97,7 @@ const mutations = {
                 }
             })
         }
-        local.set(states.event);
+        local.set(states);
     }
 }
 export default new Vuex.Store({
