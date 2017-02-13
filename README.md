@@ -28,6 +28,13 @@
 	npm run dev
 	// 即可在本地开启 http://localhost:8080 访问该项目
 
+	// 如果 node-sass 安装失败，可使用 cnpm 安装
+	npm install cnpm -g --registry=https://registry.npm.taobao.org
+	cnpm -v 			// 查看cnpm版本号确认安装成功
+	cnpm install node-sass -D
+	
+	//安装成功后再看看是否可以正确运行了
+
 github地址：[https://github.com/lin-xin/notepad](https://github.com/lin-xin/notepad)
 
 demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
