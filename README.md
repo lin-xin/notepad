@@ -80,7 +80,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 	<template>
 		<div id="app">
-			<div class="event-tab" @click.self="changeCollapse(0,$event)">未完成</div>
+			<div class="event-tab" @click="changeCollapse(0,$event)">未完成</div>
             <ul class="event-box" :style="{'height':'auto','display':'block'}">
                 <li class="event-list" v-for="value in getToDo">
                     <div>{{value.content}}</div>
@@ -111,7 +111,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	                }
 	            },
 	            closeCollapse(num,event){					// closeCollapse，关闭折叠面板
-	                const ulElement = event.target.nextElementSibling;
+	                const ulElement = event.currentTarget.nextElementSibling;
 	                ulElement.style.height = ulElement.offsetHeight + 'px';
 	                this.collapse[num].contentHeight = ulElement.offsetHeight;
 	                setTimeout(function () {
@@ -123,7 +123,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	
 	            },
 	            openCollapse(num,event){					// openCollapse，显示折叠面板
-	                const ulElement = event.target.nextElementSibling,
+	                const ulElement = event.currentTarget.nextElementSibling,
 	                        self = this;
 	                ulElement.style.display = 'block';
 	                setTimeout(function () {
