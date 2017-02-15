@@ -4,7 +4,7 @@
         <section class="container" :class="{'hide': table}">
             <add-event></add-event>
             <div class="event-content">
-                <div class="event-tab" @click.self="changeCollapse(0,$event)">未完成
+                <div class="event-tab" @click="changeCollapse(0,$event)">未完成
                     <span :class="{'close-span': !collapse[0].show}"></span>
                 </div>
                 <ul class="event-box"
@@ -15,7 +15,7 @@
                         <button class="cancel-btn" @click="moveCancel(value.id)">取消</button>
                     </li>
                 </ul>
-                <div class="event-tab" @click.self="changeCollapse(1,$event)">已完成
+                <div class="event-tab" @click="changeCollapse(1,$event)">已完成
                     <span :class="{'close-span': !collapse[1].show}"></span>
                 </div>
                 <ul class="event-box" >
@@ -25,7 +25,7 @@
                         <span class="event-time">{{value.time}}</span>
                     </li>
                 </ul>
-                <div class="event-tab" @click.self="changeCollapse(2,$event)">已取消
+                <div class="event-tab" @click="changeCollapse(2,$event)">已取消
                     <span :class="{'close-span': !collapse[2].show}"></span>
                 </div>
                 <ul class="event-box" :class="{'event-box-hide': false}">
@@ -138,7 +138,7 @@
                 }
             },
             closeCollapse(num,event){
-                const ulElement = event.target.nextElementSibling;
+                const ulElement = event.currentTarget.nextElementSibling;
                 ulElement.style.height = ulElement.offsetHeight + 'px';
                 this.collapse[num].contentHeight = ulElement.offsetHeight;
                 setTimeout(function () {
@@ -150,7 +150,7 @@
 
             },
             openCollapse(num,event){
-                const ulElement = event.target.nextElementSibling,
+                const ulElement = event.currentTarget.nextElementSibling,
                         self = this;
                 ulElement.style.display = 'block';
                 setTimeout(function () {
