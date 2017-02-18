@@ -229,10 +229,10 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 	// store/index.js
 	const LocalEvent = function(item){     		// 定义一个本地存储的构造函数
-	    this.get = function () {				// 存数据
+	    this.get = function () {				// 拿数据
 	        return JSON.parse(localStorage.getItem(item));
 	    }
-	    this.set = function (obj) {				// 拿数据
+	    this.set = function (obj) {				// 存数据
 	        localStorage.setItem(item,JSON.stringify(obj));
 	    }
 	    this.clear = function () {				// 删数据
