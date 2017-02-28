@@ -2,7 +2,7 @@
     <div class="event-tools" :class="{'show-event-tools':isShow}">
         <ul class="tools-sidebar">
             <li>
-                <button class="tools-btn" @click="backupData">打印数据</button>
+                <button class="tools-btn" @click="downloadData('notepad.txt',getDate)">下载数据</button>
             </li>
             <li>
                 <button class="tools-btn" @click="openTable">编辑数据</button>
@@ -21,15 +21,26 @@
             }
         },
         props:['isShow'],
+        computed:{
+            getDate(){
+                const self = this;
+                return JSON.stringify(self.$store.state);
+            }
+        },
         methods: {
             showDialog(){
                 this.$emit('cleardialog');
             },
-            backupData () {
-                console.log(localStorage.getItem('lx_notepad'));
-            },
             openTable(){
                 this.$emit('opentable');
+            },
+            downloadData(fileName, content){
+                let aTag = document.createElement('a');
+                let blob = new Blob([content]);
+                aTag.download = fileName;
+                aTag.href = URL.createObjectURL(blob);
+                aTag.click();
+                URL.revokeObjectURL(blob);
             }
         }
     }
