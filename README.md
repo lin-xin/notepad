@@ -82,11 +82,13 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 <template>
 	<div id="app">
 		<div class="event-tab" @click="changeCollapse(0,$event)">未完成</div>
-        <ul class="event-box" :style="{'height':'auto','display':'block'}">
-            <li class="event-list" v-for="value in getToDo">
-                <div>{{value.content}}</div>
-            </li>
-        </ul>
+		<div class="event-box" :style="{'height':'auto','display':'block'}">
+	        <ul>
+	            <li class="event-list" v-for="value in getToDo">
+	                <div>{{value.content}}</div>
+	            </li>
+	        </ul>
+		</div>
 	</div>
 </template>
 <script>
@@ -96,43 +98,39 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
                 collapse:[
                     {
                         show: true,  					// show == true, 表示当前折叠面板显示
-                        contentHeight: 'auto'			// contentHeight, 存储当前折叠面板高度
                     }
                 ]
 			}
 		},
 		methods:{
 			changeCollapse(num,event){    				// 根据折叠面板当前状态进行显示或折叠
-                if(this.collapse[num].show){
-                    this.closeCollapse(num,event);
-                    this.collapse[num].show = false;
-                }else{
-                    this.openCollapse(num,event);
-                    this.collapse[num].show = true;
+                const show = this.collapse[num].show;
+                if (show) {
+                    this.closeCollapse(event);
+                } else {
+                    this.openCollapse(event);
                 }
+                this.collapse[num].show = !show;
             },
             closeCollapse(num,event){					// closeCollapse，关闭折叠面板
-                const ulElement = event.currentTarget.nextElementSibling;
-                ulElement.style.height = ulElement.offsetHeight + 'px';
-                this.collapse[num].contentHeight = ulElement.offsetHeight;
-                setTimeout(function () {
+                let ulElement = event.currentTarget.nextElementSibling,
+                    children = ulElement.getElementsByTagName('ul')[0];
+                ulElement.style.height = children.offsetHeight + 'px';
+                setTimeout(function(){
                     ulElement.style.height = '0px';
                     setTimeout(function () {
                         ulElement.style.display = 'none';
-                    },300)
+                    }, 300)
                 },10)
-
             },
             openCollapse(num,event){					// openCollapse，显示折叠面板
-                const ulElement = event.currentTarget.nextElementSibling,
-                        self = this;
+                let ulElement = event.currentTarget.nextElementSibling,
+                    children = ulElement.getElementsByTagName('ul')[0];
                 ulElement.style.display = 'block';
+                ulElement.style.height = children.offsetHeight + 'px';
                 setTimeout(function () {
-                    ulElement.style.height = self.collapse[num].contentHeight + 'px';
-                    setTimeout(function () {
-                        ulElement.style.height = 'auto';
-                    },300)
-                },10)
+                    ulElement.style.height = 'auto';
+                }, 300)
             }
 		}
 	}
