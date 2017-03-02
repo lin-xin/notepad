@@ -78,75 +78,77 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 代码如下：
 
-	<template>
-		<div id="app">
-			<div class="event-tab" @click="changeCollapse(0,$event)">未完成</div>
-            <ul class="event-box" :style="{'height':'auto','display':'block'}">
-                <li class="event-list" v-for="value in getToDo">
-                    <div>{{value.content}}</div>
-                </li>
-            </ul>
-		</div>
-	</template>
-	<script>
-		export default {
-	        data(){
-	            return {
-	                collapse:[
-	                    {
-	                        show: true,  					// show == true, 表示当前折叠面板显示
-	                        contentHeight: 'auto'			// contentHeight, 存储当前折叠面板高度
-	                    }
-	                ]
-				}
-			},
-			methods:{
-				changeCollapse(num,event){    				// 根据折叠面板当前状态进行显示或折叠
-	                if(this.collapse[num].show){
-	                    this.closeCollapse(num,event);
-	                    this.collapse[num].show = false;
-	                }else{
-	                    this.openCollapse(num,event);
-	                    this.collapse[num].show = true;
-	                }
-	            },
-	            closeCollapse(num,event){					// closeCollapse，关闭折叠面板
-	                const ulElement = event.currentTarget.nextElementSibling;
-	                ulElement.style.height = ulElement.offsetHeight + 'px';
-	                this.collapse[num].contentHeight = ulElement.offsetHeight;
-	                setTimeout(function () {
-	                    ulElement.style.height = '0px';
-	                    setTimeout(function () {
-	                        ulElement.style.display = 'none';
-	                    },300)
-	                },10)
-	
-	            },
-	            openCollapse(num,event){					// openCollapse，显示折叠面板
-	                const ulElement = event.currentTarget.nextElementSibling,
-	                        self = this;
-	                ulElement.style.display = 'block';
-	                setTimeout(function () {
-	                    ulElement.style.height = self.collapse[num].contentHeight + 'px';
-	                    setTimeout(function () {
-	                        ulElement.style.height = 'auto';
-	                    },300)
-	                },10)
-	            }
+```HTML
+<template>
+	<div id="app">
+		<div class="event-tab" @click="changeCollapse(0,$event)">未完成</div>
+        <ul class="event-box" :style="{'height':'auto','display':'block'}">
+            <li class="event-list" v-for="value in getToDo">
+                <div>{{value.content}}</div>
+            </li>
+        </ul>
+	</div>
+</template>
+<script>
+	export default {
+        data(){
+            return {
+                collapse:[
+                    {
+                        show: true,  					// show == true, 表示当前折叠面板显示
+                        contentHeight: 'auto'			// contentHeight, 存储当前折叠面板高度
+                    }
+                ]
 			}
-		}
-	</script>
-	<style lang="scss" rel="stylesheet/scss">
-		ul.event-box{
-            list-style: none;
-            overflow: hidden;
-            border:{
-                left:1px solid #eee;
-                right:1px solid #eee;
+		},
+		methods:{
+			changeCollapse(num,event){    				// 根据折叠面板当前状态进行显示或折叠
+                if(this.collapse[num].show){
+                    this.closeCollapse(num,event);
+                    this.collapse[num].show = false;
+                }else{
+                    this.openCollapse(num,event);
+                    this.collapse[num].show = true;
+                }
+            },
+            closeCollapse(num,event){					// closeCollapse，关闭折叠面板
+                const ulElement = event.currentTarget.nextElementSibling;
+                ulElement.style.height = ulElement.offsetHeight + 'px';
+                this.collapse[num].contentHeight = ulElement.offsetHeight;
+                setTimeout(function () {
+                    ulElement.style.height = '0px';
+                    setTimeout(function () {
+                        ulElement.style.display = 'none';
+                    },300)
+                },10)
+
+            },
+            openCollapse(num,event){					// openCollapse，显示折叠面板
+                const ulElement = event.currentTarget.nextElementSibling,
+                        self = this;
+                ulElement.style.display = 'block';
+                setTimeout(function () {
+                    ulElement.style.height = self.collapse[num].contentHeight + 'px';
+                    setTimeout(function () {
+                        ulElement.style.height = 'auto';
+                    },300)
+                },10)
             }
-            transition: height .3s;							// transition，添加折叠或显示时的动画效果
 		}
-	</style>
+	}
+</script>
+<style lang="scss" rel="stylesheet/scss">
+	ul.event-box{
+        list-style: none;
+        overflow: hidden;
+        border:{
+            left:1px solid #eee;
+            right:1px solid #eee;
+        }
+        transition: height .3s;							// transition，添加折叠或显示时的动画效果
+	}
+</style>
+```
 
 2.切换状态
 
@@ -156,64 +158,66 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 代码如下：
 
-	// store/index.js
-	import Vue from 'vue';
-	import Vuex from 'vuex';
-	import * as actions from './actions.js';
-	Vue.use(Vuex);
-	const state = {
-	    event: []  // event,用来存储所有事件
-	}
-	const mutations = {
-	    EVENTDONE(states,obj){  // EVENTDONE，用来修改事件的状态为已完成
-	        for (let i = 0; i < states.event.length; i++) {
-	            if (states.event[i].id === obj.id) {
-	                states.event[i].type = 2;   // type == 2,表示状态为已完成
-	                break;
-	            }
-	        }
-	    }
-	}
-	export default new Vuex.Store({
-	    state,
-	    actions,
-	    mutations
-	})
+```JavaScript
+// store/index.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+import * as actions from './actions.js';
+Vue.use(Vuex);
+const state = {
+    event: []  // event,用来存储所有事件
+}
+const mutations = {
+    EVENTDONE(states,obj){  // EVENTDONE，用来修改事件的状态为已完成
+        for (let i = 0; i < states.event.length; i++) {
+            if (states.event[i].id === obj.id) {
+                states.event[i].type = 2;   // type == 2,表示状态为已完成
+                break;
+            }
+        }
+    }
+}
+export default new Vuex.Store({
+    state,
+    actions,
+    mutations
+})
 
-	// store/actions.js
-	export const eventdone = ({ commit }, param) =>{
-	    commit('EVENTDONE',{id: param});
-	}
+// store/actions.js
+export const eventdone = ({ commit }, param) =>{
+    commit('EVENTDONE',{id: param});
+}
 
-	// App.vue
-	<template>
-		<div id="app">
-            <ul class="event-box">
-                <li class="event-list" v-for="value in getToDo">
-                    <input type="checkbox" @click="moveToDone(value.id,$event)">
-                    <div>{{value.content}}</div>
-                </li>
-            </ul>
-		</div>
-	</template>
-	<script>
-		export default {
-			computed:{
-				getToDo(){    // getToDo，实时获取状态为未完成的事件
-	                return this.$store.state.event.filter(function(d){
-	                    if(d.type === 1){   // type == 1，表示状态为未完成
-	                        return d;
-	                    }
-	                });
-	            }
-			},
-			methods:{
-				moveToDone(id,event){  // moveToDone，选中checkbox将事件移至已完成
-	                this.$store.dispatch('eventdone',id);
-	            }
-			}
+// App.vue
+<template>
+	<div id="app">
+        <ul class="event-box">
+            <li class="event-list" v-for="value in getToDo">
+                <input type="checkbox" @click="moveToDone(value.id,$event)">
+                <div>{{value.content}}</div>
+            </li>
+        </ul>
+	</div>
+</template>
+<script>
+	export default {
+		computed:{
+			getToDo(){    // getToDo，实时获取状态为未完成的事件
+                return this.$store.state.event.filter(function(d){
+                    if(d.type === 1){   // type == 1，表示状态为未完成
+                        return d;
+                    }
+                });
+            }
+		},
+		methods:{
+			moveToDone(id,event){  // moveToDone，选中checkbox将事件移至已完成
+                this.$store.dispatch('eventdone',id);
+            }
 		}
-	</script>
+	}
+</script>
+```
 
 3.本地存储
 
@@ -227,31 +231,33 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 代码如下：
 
-	// store/index.js
-	const LocalEvent = function(item){     		// 定义一个本地存储的构造函数
-	    this.get = function () {				// 拿数据
-	        return JSON.parse(localStorage.getItem(item));
-	    }
-	    this.set = function (obj) {				// 存数据
-	        localStorage.setItem(item,JSON.stringify(obj));
-	    }
-	    this.clear = function () {				// 删数据
-	        localStorage.removeItem(item);
-	    }
-	}
-	const local = new LocalEvent('lx_notepad'); // 创建一个本地存储的事例
-	const state = local.get() || {
-	    event: [],
-	    count: 0
-	}
-	const mutations = {
-	    ADDEVENT(states,obj){					// ADDEVENT，添加新的事件，并存储到localStorage里
-			states.count++;
-			obj.items.id = states.count;
-	        states.event.unshift(obj.items);
-	        local.set(states);
-	    }
-	}
+```JavaScript
+// store/index.js
+const LocalEvent = function(item){     		// 定义一个本地存储的构造函数
+    this.get = function () {				// 拿数据
+        return JSON.parse(localStorage.getItem(item));
+    }
+    this.set = function (obj) {				// 存数据
+        localStorage.setItem(item,JSON.stringify(obj));
+    }
+    this.clear = function () {				// 删数据
+        localStorage.removeItem(item);
+    }
+}
+const local = new LocalEvent('lx_notepad'); // 创建一个本地存储的事例
+const state = local.get() || {
+    event: [],
+    count: 0
+}
+const mutations = {
+    ADDEVENT(states,obj){					// ADDEVENT，添加新的事件，并存储到localStorage里
+		states.count++;
+		obj.items.id = states.count;
+        states.event.unshift(obj.items);
+        local.set(states);
+    }
+}
+```
 
 4.父子组件间的通讯
 	
@@ -262,61 +268,63 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 代码如下：
 
-	// App.vue
-	<template>
-	    <div id="app">
-			// 通过 isShow、msg 把数据传个子组件，监听自定义事件cancel、sure。
-			<n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
-		</div>
-	</template>
-	<script>
-		import nDialog from './components/dialog.vue';
-		export default {
-			data(){
-            	return {
-                	dialog: true,
-                	tips: '清除后无法恢复，确认清除吗？'
-				}
-            },
-			components: {
-	            nDialog
-	        },
-			methods:{
-				sureDialog(){
-                	this.$store.dispatch('clearevent');
-                	this.dialog = false;
-            	}
+```HTML
+// App.vue
+<template>
+    <div id="app">
+		// 通过 isShow、msg 把数据传个子组件，监听自定义事件cancel、sure。
+		<n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
+	</div>
+</template>
+<script>
+	import nDialog from './components/dialog.vue';
+	export default {
+		data(){
+        	return {
+            	dialog: true,
+            	tips: '清除后无法恢复，确认清除吗？'
 			}
+        },
+		components: {
+            nDialog
+        },
+		methods:{
+			sureDialog(){
+            	this.$store.dispatch('clearevent');
+            	this.dialog = false;
+        	}
 		}
-	</script>
+	}
+</script>
 
-	// dialog.vue
-	<template>
-	    <div class="dialog" :class="{'dialog-show':isShow}">
-	        <div class="dialog-wrapper">
-	            <div class="dialog-content">
-	                {{msg}}
-	            </div>
-	            <div class="dialog-btns">
-	                <button type="button" class="cancel-btn" @click="cancelEvent">取消</button>
-	                <button type="button" class="sure-btn" @click="sureEvent">确定</button>
-	            </div>
-	        </div>
-	    </div>
-	</template>
-	<script>
-	    export default {
-	        props:['isShow','msg'],  // 通过 props 属性获得父组件传递过来的数据
-	        methods: {
-	            cancelEvent(){
-	                this.$emit('cancel');  // 取消按钮触发父组件的 cancel 自定义事件
-	            },
-	            sureEvent(){
-	                this.$emit('sure');    // 确认按钮触发父组件的 sure 自定义事件
-	            }
-	        }
-	    }
-	</script>
+// dialog.vue
+<template>
+    <div class="dialog" :class="{'dialog-show':isShow}">
+        <div class="dialog-wrapper">
+            <div class="dialog-content">
+                {{msg}}
+            </div>
+            <div class="dialog-btns">
+                <button type="button" class="cancel-btn" @click="cancelEvent">取消</button>
+                <button type="button" class="sure-btn" @click="sureEvent">确定</button>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    export default {
+        props:['isShow','msg'],  // 通过 props 属性获得父组件传递过来的数据
+        methods: {
+            cancelEvent(){
+                this.$emit('cancel');  // 取消按钮触发父组件的 cancel 自定义事件
+            },
+            sureEvent(){
+                this.$emit('sure');    // 确认按钮触发父组件的 sure 自定义事件
+            }
+        }
+    }
+</script>
+```
 
 5.筛选功能
 
@@ -326,39 +334,40 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 
 代码如下：
 
-	<script>
-	    export default {
-	        data: function(){
-	            return {
-	                screen_type: 0,														// 筛选类型，0 表示不筛选
-	                screen_title: '',													// 筛选关键词，'' 表示不筛选
-	            }
-	        },
-	        computed:{
-	            notapad(){
-	                var self = this;
-	                return self.$store.state.event.filter(function(d){					// 使用过滤器
-	                    if(self.screen_type !== 0 && self.screen_title === ''){			// 只筛选类型
-	                        if( d.type === self.screen_type ){
-	                            return d;
-	                        }
-	                    }else if(self.screen_type !== 0 && self.screen_title !== ''){	// 筛选类型和关键词
-	                        if( d.type === self.screen_type && d.content.indexOf(self.screen_title) !== -1){
-	                            return d;
-	                        }
-	                    }else if(self.screen_type === 0 && self.screen_title !== ''){	// 只筛选关键词
-	                        if(d.content.indexOf(self.screen_title) !== -1){
-	                            return d;
-	                        }
-	                    }else{															// 不进行筛选
-	                        return d;
-	                    }
-	                });
-	            }
-	        }
-		}	
-	</script>
-
+```JavaScript
+<script>
+    export default {
+        data: function(){
+            return {
+                screen_type: 0,														// 筛选类型，0 表示不筛选
+                screen_title: '',													// 筛选关键词，'' 表示不筛选
+            }
+        },
+        computed:{
+            notapad(){
+                var self = this;
+                return self.$store.state.event.filter(function(d){					// 使用过滤器
+                    if(self.screen_type !== 0 && self.screen_title === ''){			// 只筛选类型
+                        if( d.type === self.screen_type ){
+                            return d;
+                        }
+                    }else if(self.screen_type !== 0 && self.screen_title !== ''){	// 筛选类型和关键词
+                        if( d.type === self.screen_type && d.content.indexOf(self.screen_title) !== -1){
+                            return d;
+                        }
+                    }else if(self.screen_type === 0 && self.screen_title !== ''){	// 只筛选关键词
+                        if(d.content.indexOf(self.screen_title) !== -1){
+                            return d;
+                        }
+                    }else{															// 不进行筛选
+                        return d;
+                    }
+                });
+            }
+        }
+	}	
+</script>
+```
 
 ## 总结 ##
 
