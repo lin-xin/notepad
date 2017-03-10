@@ -4,6 +4,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as actions from './actions.js';
+import * as type from './mutations_types.js';
 Vue.use(Vuex);
 const getDate = () => { //获取当天日期
     const date = new Date(),
@@ -28,13 +29,13 @@ const state = local.get() || {
 }
 
 const mutations = {
-    ADDEVENT(states,obj){
+    [type.ADDEVENT](states,obj){
         states.count++;
         obj.items.id = states.count;
         states.event.unshift(obj.items);
         local.set(states);
     },
-    EVENTDONE(states,obj){
+    [type.EVENTDONE](states,obj){
         for (let i = 0; i < states.event.length; i++) {
             if (states.event[i].id === obj.id) {
                 states.event[i].type = 2;
@@ -47,7 +48,7 @@ const mutations = {
         states.event.unshift(item);
         local.set(states);
     },
-    EVENTTODO(states,obj){
+    [type.EVENTTODO](states,obj){
         for (let i = 0; i < states.event.length; i++) {
             if (states.event[i].id === obj.id) {
                 states.event[i].type = 1;
@@ -59,7 +60,7 @@ const mutations = {
         states.event.unshift(item);
         local.set(states);
     },
-    EVENTCANCEL(states,obj){
+    [type.EVENTCANCEL](states,obj){
         for (let i = 0; i < states.event.length; i++) {
             if (states.event[i].id === obj.id) {
                 states.event[i].type = 3;
@@ -71,11 +72,11 @@ const mutations = {
         states.event.unshift(item);
         local.set(states);
     },
-    CLEAREVENT(states){
+    [type.CLEAREVENT](states){
         states.event = [];
         local.clear();
     },
-    DELEVENT(states,info){
+    [type.DELEVENT](states,info){
         if(states.event[info.index].id === info.id){
             states.event.splice(info.index, 1);
         }else{
@@ -87,7 +88,7 @@ const mutations = {
         }
         local.set(states);
     },
-    EDITEVENT(states,info){
+    [type.EDITEVENT](states,info){
         if(states.event[info.index].id === info.id){
             states.event[info.index].content = info.content;
         }else{

@@ -17,7 +17,7 @@
     header{
         width:100%;
         height:70px;
-        background: #00a2ff;
+        background: #00b0f0;
         h1{
             position: relative;
             width:100%;

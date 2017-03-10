@@ -60,11 +60,11 @@
             height:40px;
             line-height: 26px;
             color: #fff;
-            border:1px solid #20a0ff;
-            background: #20a0ff;
-            transition: background .3s ease-in;
+            border:1px solid #00b0f0;
+            background: #00b0f0;
+            /*transition: background .3s ease-in;*/
             &:hover{
-                background: #4db3ff;
+                background: #08aae5;
             }
         }
     }

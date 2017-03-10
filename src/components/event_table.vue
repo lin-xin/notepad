@@ -174,11 +174,11 @@
                     padding:3px 7px;
                     font-size: 12px;
                     color: #fff;
-                    background: #00a2ff;
+                    background: #00b0f0;
                     border:0;
                     margin: 0 3px 3px 0;
                     &.del-btn{
-                        background: #F44336;
+                        background: #f57067;
                     }
                 }
             }
@@ -236,14 +236,14 @@
                     cursor: pointer;
                     &:after{
                         position: absolute;
-                        right:5px;
-                        top:10px;
-                        width:7px;
-                        height:7px;
+                        right:6px;
+                        top:12px;
+                        width:6px;
+                        height:6px;
                         content: '';
                         border:{
-                            right:1px solid #333;
-                            bottom: 1px solid #333;
+                            right:1px solid #999;
+                            bottom: 1px solid #999;
                         }
                         transform: rotate(45deg);
                     }

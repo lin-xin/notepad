@@ -138,7 +138,7 @@
             box-sizing: border-box;
             color: #fff;
             cursor: pointer;
-            background: #00a2ff;
+            background: #00b0f0;
             span {
                 position: absolute;
                 right: 20px;
@@ -147,8 +147,8 @@
                 height: 10px;
                 content: '';
                 border: {
-                    top: 3px solid #fff;
-                    right: 3px solid #fff;
+                    top: 2px solid #fff;
+                    right: 2px solid #fff;
                 }
                 transform: rotate(135deg);
                 transition: transform .3s;
@@ -172,6 +172,7 @@
                 padding: 10px 100px 10px 50px;
                 box-sizing: border-box;
                 border-bottom: 1px solid #eee;
+                color: #373e40;
                 input[type=checkbox] {
                     position: absolute;
                     left: 15px;
@@ -189,8 +190,12 @@
                     padding: 0;
                     background: #fff;
                     border: 1px solid #c0ccda;
-                    color: #1f2d3d;
+                    color: #666;
                     font-size: 12px;
+                    &:hover{
+                        border: 1px solid #00b0f0;
+                        color: #00b0f0;
+                    }
                 }
                 .event-time {
                     position: absolute;
