@@ -60,28 +60,13 @@
         },
         computed: {
             getToDo(){
-                const self = this;
-                return self.$store.state.event.filter(function (d) {
-                    if (d.type === 1) {
-                        return d;
-                    }
-                });
+                return this.$store.getters.getToDo;
             },
             getDone(){
-                const self = this;
-                return self.$store.state.event.filter(function (d) {
-                    if (d.type === 2) {
-                        return d;
-                    }
-                });
+                return this.$store.getters.getDone;
             },
             getCancel(){
-                const self = this;
-                return self.$store.state.event.filter(function (d) {
-                    if (d.type === 3) {
-                        return d;
-                    }
-                });
+                return this.$store.getters.getCancel;
             },
         },
         methods: {

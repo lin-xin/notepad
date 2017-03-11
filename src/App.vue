@@ -1,5 +1,5 @@
 <template>
-    <div id="app" :class="[theme_color]">
+    <div id="app" :class="[getTheme]">
         <n-header @tools="changePages"></n-header>
         <section class="container" :class="{'hide': table}">
             <n-add></n-add>
@@ -49,6 +49,11 @@
             nTable,
             nList,
             nTheme
+        },
+        computed:{
+            getTheme(){
+                return this.$store.getters.getTheme;
+            }
         },
         methods: {
             clearData(){

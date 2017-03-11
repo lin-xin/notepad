@@ -59,7 +59,7 @@
         computed:{
             notapad(){
                 var self = this;
-                return self.$store.state.event.filter(function(d){
+                return self.$store.getters.getEventList.filter(function(d){
                     if(self.screen_type !== 0 && self.screen_title === ''){
                         if( d.type === self.screen_type ){
                             return d;

@@ -4,19 +4,19 @@
             <div class="theme-title">
                 点击切换主题色
             </div>
-            <div class="theme-list">
+            <div class="theme-list" @click="switchTheme('blue')">
                 <span style="background: #00b0f0"></span>#00b0f0
             </div>
-            <div class="theme-list">
+            <div class="theme-list" @click="switchTheme('green')">
                 <span style="background: #00d1b2"></span>#00d1b2
             </div>
-            <div class="theme-list">
+            <div class="theme-list" @click="switchTheme('orange')">
                 <span style="background: #f4b976"></span>#f4b976
             </div>
-            <div class="theme-list">
+            <div class="theme-list" @click="switchTheme('pink')">
                 <span style="background: #f39894"></span>#f39894
             </div>
-            <div class="theme-list">
+            <div class="theme-list" @click="switchTheme('cyan')">
                 <span style="background: #26b6be"></span>#26b6be
             </div>
         </div>
@@ -28,7 +28,12 @@
         data: function(){
             return {}
         },
-        props:['isShow']
+        props:['isShow'],
+        methods:{
+            switchTheme(color){
+                this.$store.dispatch('switch_theme',color);
+            }
+        }
     }
 </script>
 
