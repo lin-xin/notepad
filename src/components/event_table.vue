@@ -174,11 +174,10 @@
                     padding:3px 7px;
                     font-size: 12px;
                     color: #fff;
-                    background: #00b0f0;
                     border:0;
                     margin: 0 3px 3px 0;
                     &.del-btn{
-                        background: #f57067;
+                        background: #f57067 !important;
                     }
                 }
             }
@@ -213,7 +212,6 @@
                     right: 10px;
                     width:80px;
                     height:40px;
-                    background: #00a2ff;
                     color: #fff;
                     border:0;
                 }

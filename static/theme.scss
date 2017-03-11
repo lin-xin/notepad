@@ -1,0 +1,100 @@
+$blue_color : #00b0f0;
+$blue_hover_color : #08aae5;
+
+$green_color : #00d1b2;
+$green_hover_color : #18c2a9;
+
+$orange_color : #f4b976;
+$orange_hover_color : #e9ae6a;
+
+$pink_color : #f39894;
+$pink_hover_color : #d77672;
+
+
+$cyan_color : #26b6be;
+$cyan_hover_color : #1facb4;
+
+@mixin theme($bg, $bg_hover){
+    header {
+        background: $bg;
+    }
+    .event-tools{
+        .tools-btn{
+            border:1px solid $bg;
+            background: $bg;
+            &:hover{
+                background: $bg_hover;
+            }
+        }
+    }
+    .event-add{
+        .n-input:focus {
+            border-color: $bg;
+        }
+        .add-btn{
+            border:1px solid $bg;
+            background: $bg;
+            &:hover{
+                background: $bg_hover;
+            }
+        }
+    }
+    .event-content {
+        .event-tab {
+            background: $bg;
+        }
+        .event-box{
+            .event-list{
+                .cancel-btn:hover{
+                    border: 1px solid $bg;
+                    color: $bg;
+                }
+            }
+        }
+    }
+    .event-all{
+        .table-box{
+            .edit-input,.event-table{
+                button{
+                    background: $bg;
+                }
+            }
+        }
+    }
+    .dialog{
+        .dialog-btns {
+            .sure-btn{
+                border: 1px solid $bg;
+                background: $bg;
+                &:hover {
+                    background: $bg_hover;
+                }
+            }
+        }
+    }
+}
+
+//蓝色主题
+.blue{
+    @include theme(#{$blue_color},#{$blue_hover_color})
+}
+
+// 绿色主题
+.green{
+    @include theme(#{$green_color},#{$green_hover_color})
+}
+
+// 黄色主题
+.orange{
+    @include theme(#{$orange_color},#{$orange_hover_color})
+}
+
+// 粉色主题
+.pink{
+    @include theme(#{$pink_color},#{$pink_hover_color})
+}
+
+// 青蓝色主题
+.cyan{
+    @include theme(#{$cyan_color},#{$cyan_hover_color})
+}

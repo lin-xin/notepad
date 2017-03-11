@@ -2,6 +2,9 @@
     <div class="event-tools" :class="{'show-event-tools':isShow}">
         <ul class="tools-sidebar">
             <li>
+                <button class="tools-btn" @click="openTheme">切换主题</button>
+            </li>
+            <li>
                 <button class="tools-btn" @click="downloadData('notepad.txt',getDate)">下载数据</button>
             </li>
             <li>
@@ -33,6 +36,9 @@
             },
             openTable(){
                 this.$emit('opentable');
+            },
+            openTheme(){
+                this.$emit('opentheme');
             },
             downloadData(fileName, content){
                 let aTag = document.createElement('a');
@@ -73,12 +79,7 @@
             height:40px;
             line-height: 26px;
             color: #fff;
-            border:1px solid #00b0f0;
-            background: #00b0f0;
             transition: background .3s ease-in;
-            &:hover{
-                background: #08aae5;
-            }
         }
         pre{
             white-space: pre-wrap;

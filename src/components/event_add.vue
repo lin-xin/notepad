@@ -49,7 +49,6 @@
             font-size:inherit;
             &:focus {
                 outline: none;
-                border-color: #20a0ff;
             }
         }
         .add-btn{
@@ -60,12 +59,7 @@
             height:40px;
             line-height: 26px;
             color: #fff;
-            border:1px solid #00b0f0;
-            background: #00b0f0;
             /*transition: background .3s ease-in;*/
-            &:hover{
-                background: #08aae5;
-            }
         }
     }
 </style>

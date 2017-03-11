@@ -89,12 +89,7 @@
                 width: 50px;
                 margin-left: 5px;
                 color: #fff;
-                border: 1px solid #20a0ff;
-                background: #20a0ff;
                 transition: background .3s ease-in;
-                &:hover {
-                    background: #4db3ff;
-                }
             }
         }
     }

@@ -138,7 +138,6 @@
             box-sizing: border-box;
             color: #fff;
             cursor: pointer;
-            background: #00b0f0;
             span {
                 position: absolute;
                 right: 20px;
@@ -192,10 +191,6 @@
                     border: 1px solid #c0ccda;
                     color: #666;
                     font-size: 12px;
-                    &:hover{
-                        border: 1px solid #00b0f0;
-                        color: #00b0f0;
-                    }
                 }
                 .event-time {
                     position: absolute;
@@ -208,7 +203,6 @@
                 .event-delete {
                     text-decoration: line-through;
                     color: #999;
-
                 }
             }
         }

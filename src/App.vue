@@ -1,13 +1,18 @@
 <template>
-    <div id="app">
+    <div id="app" :class="[theme_color]">
         <n-header @tools="changePages"></n-header>
         <section class="container" :class="{'hide': table}">
             <n-add></n-add>
             <n-list></n-list>
-            <n-sidebar :is-show="tools" @cleardialog="clearData" @opentable="table = true;tools = false"></n-sidebar>
+            <n-sidebar :is-show="tools"
+                       @cleardialog="clearData"
+                       @opentable="table = true;tools = false"
+                       @opentheme="theme = true;tools = false"
+            ></n-sidebar>
         </section >
         <n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
         <n-table @deldialog="delData" :is-show="table" @close="table = false"></n-table>
+        <n-theme :is-show="theme" @close="theme = false"></n-theme>
     </div>
 </template>
 
@@ -18,14 +23,16 @@
     import nList from './components/event_list.vue';
     import nSidebar from './components/sidebar.vue';
     import nDialog from './components/dialog.vue';
+    import nTheme from './components/theme.vue';
 
     export default {
         data(){
             return {
-
+                theme_color: 'cyan',
                 tools:false,
                 dialog: false,
                 table: false,
+                theme: false,
                 dialog_type: '',
                 tips: '',  //,'删除后无法恢复，确认删除吗？'
                 del_info: {
@@ -40,7 +47,8 @@
             nSidebar,
             nDialog,
             nTable,
-            nList
+            nList,
+            nTheme
         },
         methods: {
             clearData(){
@@ -72,6 +80,8 @@
             changePages(){
                 if(this.table){
                     this.table = !this.table;
+                }else if(this.theme){
+                    this.theme = !this.theme;
                 }else{
                     this.tools = !this.tools
                 }
@@ -79,7 +89,7 @@
         }
     }
 </script>
-
+<style lang="scss" rel="stylesheet/scss" src="../static/theme.scss"></style>
 <style lang="scss" rel="stylesheet/scss">
     html,body,ul,li,input{
         margin:0;
@@ -124,6 +134,4 @@
             display: none;
         }
     }
-
-
 </style>
