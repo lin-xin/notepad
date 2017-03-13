@@ -1,7 +1,7 @@
 /**
  * Created by linxin on 2017/3/11.
  */
-module.exports = {
+const getters = {
     getEventList(states) {
         return states.event;
     },
@@ -27,3 +27,5 @@ module.exports = {
         });
     }
 };
+
+export default getters;

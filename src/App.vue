@@ -28,13 +28,12 @@
     export default {
         data(){
             return {
-                theme_color: 'cyan',
                 tools:false,
                 dialog: false,
                 table: false,
                 theme: false,
                 dialog_type: '',
-                tips: '',  //,'删除后无法恢复，确认删除吗？'
+                tips: '',
                 del_info: {
                     index: 0,
                     id: 0
@@ -51,7 +50,7 @@
             nTheme
         },
         computed:{
-            getTheme(){
+            getTheme(){             // 获取主题色
                 return this.$store.getters.getTheme;
             }
         },
