@@ -18,6 +18,7 @@
 - 支持清空所有事件
 - 支持本地化存储
 - 支持折叠面板
+- 支持切换主题颜色 :sparkles:
 
 ## 项目笔记 ##
 本项目是使用vue-cli脚手架生成的项目，项目代码可以到我的github上clone下来。clone下来之后可进入文件目录
@@ -47,19 +48,22 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 	|	|——confg/
 	|	|——node_modules/
 	|	|——src/
-	|	|	|——assets/
 	|	|	|——components/
-	|	|	|	|——add_event.vue       //添加事件组件
-	|	|	|	|——dialog.vue		   //弹出框组件
-	|	|	|	|——event_table.vue     //表格组件
-	|	|	|	|——header.vue		   //头部组件
-	|	|	|	|——tools.vue	       //工具栏组件
-	|	|	|——store/				   //存放vuex代码
-	|	|	|	|——actions.js		   //vuex的action文件
-	|	|	|	|——index.js			   //vuex核心代码
-	|	|	|——App.vue				   //父组件
-	|	|	|——main.js				   //入口文件
+	|	|	|	|——dialog.vue			//弹出框组件
+	|	|	|	|——event_add.vue			//添加事件组件
+	|	|	|	|——event_list.vue		//事件列表组件
+	|	|	|	|——event_table.vue		//表格组件
+	|	|	|	|——header.vue			//头部组件
+	|	|	|	|——sidebar.vue			//侧边栏组件
+	|	|	|	|——theme.vue				//主题组件
+	|	|	|——store/					//存放vuex代码
+	|	|	|	|——event	/	   			//事件状态模块
+	|	|	|	|——theme/      			//主题状态模块
+	|	|	|	|——index.js				//vuex核心代码
+	|	|	|——App.vue					//父组件
+	|	|	|——main.js					//入口文件
 	|	|——static/
+	|	|	|——theme.scss				//不同主题样式
 	|	|——.babelrc
 	|	|——.editorconfig
 	|	|——.gitgnore
@@ -367,6 +371,12 @@ const mutations = {
 </script>
 ```
 
+6.切换主题
+
+功能描述：通过点击选中的颜色，改变整个记事本的主题风格，并永久保存。
+
+知识点：使用vuex管理主题状态，并进行模块化管理，用localStorage永久存储选中的主题颜色。
+
 ## 总结 ##
 
 虽然只是做了个小小的记事本，但是我感觉收获还是很大的，很多知识点掌握得更加的牢固。这个记事本只做了一个页面，就没有用vue-router，路由也是vue里很强大的功能。
@@ -377,3 +387,5 @@ const mutations = {
 02-07：修复issues 取消事件的bug #1
 
 02-28：添加下载数据到notepad.txt的功能
+
+03-13：添加切换主题颜色功能
