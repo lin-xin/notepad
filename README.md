@@ -157,6 +157,7 @@ demo地址：[http://test.omwteam.com/](http://test.omwteam.com/)
 难点：在不同的状态间切换，实时地把事件在不同状态列表中显示出来
 
 解决方法：利用vuex进行状态管理，把所有事件和状态存储在store对象中，在组件中通过计算属性获得事件，因此就有了实时性。
+关于vuex更详细的教程可查看文章：[Vuex 模块化实现待办事项的状态管理](https://github.com/lin-xin/blog/issues/5)
 
 代码如下：
 
