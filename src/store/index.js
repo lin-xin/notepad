@@ -8,7 +8,7 @@ Vue.use(Vuex);
 import event from './event';
 import theme from './theme';
 
-module.exports = new Vuex.Store({
+export default new Vuex.Store({
     modules: {
         event,
         theme

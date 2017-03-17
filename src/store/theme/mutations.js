@@ -3,8 +3,8 @@
  */
 import * as func from '../function';
 
-module.exports = {
-    SWITCHTHEME(states,obj){
+export default {
+    SWITCHTHEME(states, obj){
         states.theme = obj.theme;
         func.theme_local.set(states);
     }
