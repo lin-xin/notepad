@@ -10,7 +10,11 @@
                        @opentheme="theme = true;tools = false"
             ></n-sidebar>
         </section >
-        <n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
+        <transition name="dialog">
+            <!-- <n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog> -->
+            <n-dialog v-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
+        </transition>
+        
         <n-table @deldialog="delData" :is-show="table" @close="table = false"></n-table>
         <n-theme :is-show="theme" @close="theme = false"></n-theme>
     </div>
@@ -138,5 +142,11 @@
         &.hide{
             display: none;
         }
+    }
+    .dialog-enter-active, .dialog-leave-active {
+        transition: opacity .3s;
+    }
+    .dialog-enter, .dialog-leave-to{
+        opacity: 0;
     }
 </style>

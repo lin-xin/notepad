@@ -1,5 +1,5 @@
 <template>
-    <div class="dialog" :class="{'dialog-show':isShow}">
+    <div class="dialog">
         <div class="dialog-wrapper">
             <div class="dialog-header">
                 <span class="dialog-header-title">提示</span>
@@ -20,7 +20,7 @@
         data: function(){
             return {}
         },
-        props:['isShow','msg'],
+        props:['msg'],
         methods: {
             cancelEvent(){
                 this.$emit('cancel');
@@ -41,20 +41,11 @@
         left: 0;
         overflow: auto;
         background: rgba(0, 0, 0, .4);
-        z-index: -1;
-        opacity: 0;
-        transition: all .3s linear;
-        &.dialog-show {
-            opacity: 1;
-            z-index: 1000;
-            .dialog-wrapper {
-                top: 20%;
-            }
-        }
+        z-index:999;
         .dialog-wrapper {
             position: absolute;
             left: 50%;
-            top: 15%;
+            top: 20%;
             width:100%;
             max-width: 400px;
             transform: translateX(-50%);
@@ -62,7 +53,7 @@
             border-radius: 2px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
             box-sizing: border-box;
-            transition: top .5s ease;
+            animation: dialog .5s;
         }
         .dialog-header {
             padding: 20px 20px 0;
@@ -91,6 +82,11 @@
                 color: #fff;
                 transition: background .3s ease-in;
             }
+        }
+    }
+    @keyframes dialog {
+        from{
+            top: 15%;
         }
     }
 </style>
