@@ -55,17 +55,18 @@
 <style lang="scss" rel="stylesheet/scss">
     .event-tools{
         position: fixed;
-        top:70px;
+        top:0;
         left:0;
         bottom:0;
         width:250px;
-        padding:30px 20px;
+        padding:100px 20px 30px;
         box-sizing: border-box;
         transform: translateX(-250px);
         transition: transform .3s;
         text-align: center;
         background: rgba(0,0,0,.5);
         font-size: 16px;
+        z-index:9;
         &.show-event-tools{
             transform: translateX(0);
         }

@@ -39,16 +39,17 @@
 
 <style lang="scss" rel="stylesheet/scss">
     .theme-box{
-        position: absolute;
+        position: fixed;
         left:0px;
-        top:70px;
+        top:0;
         bottom:0;
         width:230px;
-        padding:30px 20px;
+        padding:100px 20px 30px;
         box-sizing: border-box;
         transform: translateX(-250px);
         transition: transform .3s;
         background: #f8f8f8;
+        z-index:9;
         &.theme-box-show{
             transform: translateX(0);
         }

@@ -56,6 +56,7 @@
         },
         methods: {
             clearData(){
+                this.tools = false;
                 this.dialog = true;
                 this.dialog_type = 'clear';
                 this.tips = '清空后无法恢复，确认清空吗？';

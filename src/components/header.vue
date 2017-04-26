@@ -15,8 +15,10 @@
 
 <style lang="scss" rel="stylesheet/scss">
     header{
+    	position:relative;
         width:100%;
         height:70px;
+        z-index:100;
         h1{
             position: relative;
             width:100%;
