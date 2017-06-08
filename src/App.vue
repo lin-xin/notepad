@@ -17,11 +17,13 @@
         
         <n-table @deldialog="delData" :is-show="table" @close="table = false"></n-table>
         <n-theme :is-show="theme" @close="theme = false"></n-theme>
+        <n-footer></n-footer>
     </div>
 </template>
 
 <script>
     import nHeader from './components/header.vue';
+    import nFooter from './components/footer.vue';
     import nAdd from './components/event_add.vue';
     import nTable from './components/event_table.vue';
     import nList from './components/event_list.vue';
@@ -45,13 +47,7 @@
             }
         },
         components: {
-            nHeader,
-            nAdd,
-            nSidebar,
-            nDialog,
-            nTable,
-            nList,
-            nTheme
+            nHeader, nAdd, nSidebar, nDialog, nTable, nList, nTheme, nFooter
         },
         computed:{
             getTheme(){             // 获取主题色
@@ -100,7 +96,7 @@
 </script>
 <style lang="scss" rel="stylesheet/scss" src="../static/theme.scss"></style>
 <style lang="scss" rel="stylesheet/scss">
-    html,body,ul,li,input{
+    html,body,ul,li,input,p{
         margin:0;
         padding:0;
     }
@@ -126,10 +122,22 @@
         }
         cursor: pointer;
     }
+    html,body{
+        height: 100%;
+    }
+    ::-webkit-scrollbar{
+        width: 0;
+    }
     body,#app{
         width:100%;
         overflow-x: hidden;
     }
+    #app{
+        height: 100%;
+        padding-bottom: 60px;
+        box-sizing: border-box;
+    }
+
     ul{
         list-style: none;
     }
