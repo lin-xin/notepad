@@ -1,6 +1,6 @@
 # 基于vue2.0+vuex+localStorage开发的本地记事本
 
-> 本文采用vue2.0+vuex+localStorage+sass+webpack，实现一个本地存储的记事本。兼容PC端和移动端。在线预览地址：[DEMO](http://test.omwteam.com/notepad)
+> 本文采用vue2.0+vuex+localStorage+sass+webpack，实现一个本地存储的记事本。兼容PC端和移动端。在线预览地址：[DEMO](http://open.omwteam.com/notepad)
 
 ## 功能说明
 
@@ -11,7 +11,6 @@
 	- 未完成 -> 已取消(点击取消按钮)
 	- 已完成 -> 未完成(取消勾选checkbox)
 	- 已取消 -> 未完成(点击恢复按钮)
-- 支持下载数据到notepad.txt文件
 - 支持筛选事件
 - 支持编辑事件
 - 支持删除事件
@@ -19,14 +18,15 @@
 - 支持本地化存储
 - 支持折叠面板
 - 支持切换主题颜色 :sparkles:
+- 支持导出/导入数据
 
 ## 安装步骤
 本项目是使用vue-cli脚手架生成的项目，项目代码可以到我的github上clone下来。clone下来之后可进入文件目录
 
-	git clone https://github.com/lin-xin/notepad.git      // 把模板下载到本地
-	cd notepad                                            // 进入模板目录
-	npm install                                           // 安装项目依赖，等待安装完成之后
-	npm run dev											  // 即可在本地开启 http://localhost:8080 访问该项目
+	git clone https://github.com/lin-xin/notepad.git
+	cd notepad
+	npm install
+	npm run dev
 
 	// 如果 node-sass 安装失败，可使用 cnpm 安装
 	npm install cnpm -g --registry=https://registry.npm.taobao.org
@@ -86,15 +86,9 @@
 
 知识点：使用vuex管理主题状态，并进行模块化管理，用localStorage永久存储选中的主题颜色。
 
+### 7.数据的导出和导入
+
 ## 总结 ##
 
 虽然只是做了个小小的记事本，但是我感觉收获还是很大的，很多知识点掌握得更加的牢固。这个记事本只做了一个页面，就没有用vue-router，路由也是vue里很强大的功能。
 做这个记事本的初衷，是因为在工作中，我都会把最近要做的事情给记在本子上，完成之后就会打钩，所以想把这个给放到电脑上去实现。
-
-01-25：添加筛选功能
-
-02-07：修复issues 取消事件的bug #1
-
-02-28：添加下载数据到notepad.txt的功能
-
-03-13：添加切换主题颜色功能
