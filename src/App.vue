@@ -6,6 +6,7 @@
             <n-list></n-list>
             <n-sidebar :is-show="tools"
                        @cleardialog="clearData"
+                       @uploadData="uploadData"
                        @opentable="table = true;tools = false"
                        @opentheme="theme = true;tools = false"
             ></n-sidebar>
@@ -69,6 +70,12 @@
                     index: index,
                     id : id
                 }
+            },
+            uploadData(){
+                this.tools = false;
+                this.dialog = true;
+                this.dialog_type = 'upload';
+                this.tips = 'upload';
             },
             sureDialog(){
                 const self = this;

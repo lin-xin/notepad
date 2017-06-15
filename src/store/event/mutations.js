@@ -75,5 +75,11 @@ export default {
             })
         }
         func.local.set(states);
+    },
+    [type.UPLOADEVENT](states, data){
+        data = JSON.parse(data);
+        states.event = data.event.event;
+        states.count = data.event.count;
+        func.local.set(states);
     }
 }
