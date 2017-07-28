@@ -119,6 +119,7 @@
                 if(this.info.content){
                     this.$store.dispatch('editevent',this.info);
                     this.is_edit = false;
+                    this.$toast('保存成功');
                 }
             },
             closeTable(){
@@ -148,7 +149,7 @@
         .table-box{
             width:100%;
             max-width:1000px;
-            margin: 20px auto;
+            margin: 20px auto 70px;
             .event-table{
                 width:100%;
                 padding:0;

@@ -26,6 +26,7 @@
                     params.content = self.content;
                     self.$store.dispatch('addevent',params);
                     self.content = '';
+                    self.$toast('添加成功');
                 }
             }
         }

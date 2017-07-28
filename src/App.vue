@@ -82,9 +82,11 @@
                 switch (self.dialog_type){
                     case 'clear':
                         self.$store.dispatch('clearevent');
+                        self.$toast('清空数据成功');
                         break;
                     case 'del':
                         self.$store.dispatch('delevent',self.del_info);
+                        self.$toast('删除成功');
                         break;
                 }
                 this.dialog = false;
