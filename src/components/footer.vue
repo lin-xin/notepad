@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-        © 2017 <a href="https://lin-xin.github.io/" target="_blank">linshuai</a> 强力驱动
+        © 2017 <a href="https://github.com/lin-xin" target="_blank">linshuai</a> 强力驱动
     </footer>
 </template>
 
