@@ -7,7 +7,7 @@ import store from './store/index';
 import VueToast from 'vue2-toast';
 import 'vue2-toast/lib/toast.css';
 Vue.use(VueToast, {
-    defaultType: 'center'
+    type: 'center'
 })
 Vue.use(Vuex);
 new Vue({
